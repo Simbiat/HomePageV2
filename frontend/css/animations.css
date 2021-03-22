@@ -1,0 +1,19 @@
+@-webkit-keyframes pulsate {
+	0%	{transform: scale(1);}
+	50%	{transform: scale(1.75);}
+	100%	{transform: scale(1);}
+}
+@keyframes pulsate {
+	0%	{transform: scale(1);}
+	50%	{transform: scale(1.75);}
+	100%	{transform: scale(1);}
+}
+@-webkit-keyframes flashlink {
+	0%	{text-shadow: 0px 0px 5px yellow, 0 0 1em yellow;color:yellow;}
+	100%	{text-shadow: inherit;color:inherit;}
+}
+/* Standard syntax */
+@keyframes flashlink {
+	0%	{text-shadow: 0px 0px 5px yellow, 0 0 1em yellow;color:yellow;}
+	100%	{text-shadow: inherit;color:inherit;}
+}

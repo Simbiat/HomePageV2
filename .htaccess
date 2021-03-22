@@ -1,0 +1,92 @@
+Options -Indexes
+DirectoryIndex index.php
+<Files .htpasswd> 
+   deny from all 
+</Files>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteOptions AllowNoSlash
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} ^mogstkids\.eu$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.mogstkids\.eu$
+RewriteRule ^(.*)$ "http\:\/\/simbiat\.ru\/fftracker\/company\/9234631035923213559\/" [R=301,L,NC]
+
+RewriteCond %{HTTP_HOST} ^simbiat\.net$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.simbiat\.net$
+RewriteRule ^(.*)$ http://simbiat.ru/$1 [R=301,NC]
+
+#RewriteCond  %{REQUEST_URI}  !^$
+#RewriteCond  %{REQUEST_URI}  !^/
+
+#Removing www
+RewriteCond %{HTTP_HOST} ^(w{1,4})\.(.*)$ [NC]
+RewriteRule ^ http://%2%{REQUEST_URI} [R=301,QSA,NC,L]
+
+#Forcing slash
+RewriteCond %{REQUEST_URI} !(/$|\.|^$)
+RewriteRule (.*) %{REQUEST_URI}/ [R=301,L]
+
+#Redirecting images, css and js
+#RewriteRule (.*)/frontend(.*)$ /frontend$2 [R=301,NC,NS]
+#RewriteRule ^frontend/images/fftracker/crests/og/([0-9]+).png$ /imggen.php?type=ogcrest&id=$1 [L,NC]
+#RewriteRule ^frontend/(images|css|js)/(.*)$ /frontend/$1/$2 [L,NC]
+
+#RewriteRule ^index.php$ /index/ [NC,NS]
+RewriteRule ^index/$ /index.php [NC,L]
+RewriteRule ^index/([0-9]+)/$ /index.php?page=$1 [NC,L]
+#RewriteRule ^index/(.*)$ /$1 [NC]
+
+RewriteRule ^(changelog|news|stories|poems|snippets|videos)/$ /index.php?service=$1 [NC]
+RewriteRule ^(changelog|news|stories|poems|snippets|videos)/([0-9]+)/$ /index.php?service=$1&page=$2 [NC]
+RewriteRule ^(changelog|news|stories|poems|snippets|videos)/(([0-9]+)-.*)/$ /index.php?service=$1&id=$3 [NC]
+RewriteRule ^(stories|poems|snippets)/([a-zA-Z]+)/$ /index.php?service=$1&lang=$2 [NC]
+RewriteRule ^(stories|poems|snippets)/([a-zA-Z]+)/([0-9]+)/$ /index.php?service=$1&lang=$2&page=$3 [NC]
+
+RewriteRule ^(simbiat|prices|fftracker|musiclib|todo|idealist|silversteam|budget|tvtracker|multitool|bic)/$ /index.php?service=$1 [NC]
+
+RewriteRule ^sitemap/$ /feeds.php?feed=sitemap&format=xml [NC]
+RewriteRule ^sitemap/(xml|html)/$ /feeds.php?feed=sitemap&format=$1 [NC]
+RewriteRule ^sitemap/(xml|html)/([a-zA-Z0-9]+)/$ /feeds.php?feed=sitemap&format=$1&sub=$2 [NC]
+RewriteRule ^sitemap/(xml|html)/(freecompany|ffcharacter|fcranks|linkshell)/([0-9]+)/$ /feeds.php?feed=sitemap&format=$1&sub=$2&page=$3 [NC]
+
+RewriteRule ^atom/$ /feeds.php?feed=atom&type=news [NC]
+RewriteRule ^atom/(news|ffcompanies|ffcharacters|fflinkshells)/$ /feeds.php?feed=atom&type=$1 [NC]
+
+RewriteRule ^bic/([0-9]{9,9})/$ /index.php?service=bic [NC]
+RewriteRule ^bic/([0-9]{1,8})/$ /index.php?service=bic&bic=$1 [NC]
+RewriteRule ^bic/update/$ /index.php?service=bic&bic=update [NC]
+RewriteRule ^bic/update/true/$ /index.php?service=bic&bic=update&force=true [NC]
+RewriteRule ^bic/download/$ /index.php?service=bic&bic=download [NC]
+RewriteRule ^bic/download/([a-zA-Z0-9]+)/$ /index.php?service=bic&bic=download&format=$1 [NC]
+RewriteRule ^bic/download/([a-zA-Z0-9]+)/([-+!a-zA-Z0-9]+)/$ /index.php?service=bic&bic=download&format=$1&query=$2 [NC]
+RewriteRule ^bic/query/([-+!a-zA-Z0-9]+)/$ /index.php?service=bic&query=$1 [NC]
+
+RewriteRule ^fftracker/company(.*)$ /fftracker/freecompany$1 [R=301,NC]
+RewriteRule ^fftracker/member(.*)$ /fftracker/character$1 [R=301,NC]
+RewriteRule ^fftracker/(freecompany|character|linkshell|search)/$ /fftracker/ [NC]
+RewriteRule ^fftracker/search/([-+!a-zA-Z0-9]+)/$ /index.php?service=fftracker&search=$1 [NC]
+RewriteRule ^fftracker/([0-9]+)/$ /index.php?service=fftracker&type=freecompany&id=$1 [NC]
+RewriteRule ^fftracker/(freecompany|character|linkshell)/([0-9]+)/$ /index.php?service=fftracker&type=$1&id=$2 [NC]
+RewriteRule ^fftracker/(freecompany|character|linkshell)/([0-9]+)/update/$ /index.php?service=fftracker&type=$1&id=$2&update=true [NC]
+RewriteRule ^fftracker/(freecompany|character|linkshell)/([0-9]+)/update/force/$ /index.php?service=fftracker&type=$1&id=$2&update=true&force=true [NC]
+RewriteRule ^fftracker/freecompany/([0-9]+)/(all|([0-9]+))/$ /index.php?service=fftracker&type=freecompany&id=$1&rank=$2 [NC]
+
+RewriteRule ^fctracker/([0-9-]+)?/$ /fftracker/company/$1/ [R=301,L,NC]
+RewriteRule ^fctracker/(.*)?$ /fftracker/ [R=301,L,NC]
+
+RewriteRule ^GitHub/XIV-FC-Page/([0-9-]+)?/$ /GitHub/XIV-FC-Page/index.php?fcid=$1 [NC]
+RewriteRule ^GitHub/XIV-FC-Page/([0-9-]+)?$ /GitHub/XIV-FC-Page/index.php?fcid=$1 [NC]
+RewriteRule ^GitHub/XIV-FC-Page/(.*)?$ /GitHub/XIV-FC-Page/$1 [NC]
+
+RewriteRule ^ssc/([0-9-]+)/?$ /GitHub/SilverSteam/gameinfo.php?appid=$1 [NC]
+RewriteRule ^ssc/zip/([0-9-]+)/?$ /GitHub/SilverSteam/zip.php?appid=$1 [NC]
+
+#RewriteRule ^ssc/screens/(.*)$ http://cdn.akamai.steamstatic.com/steam/apps/$1 [P]
+RewriteRule ^ssc$ /ssc/ [R,NC]
+RewriteRule ^ssc/(.*)$ /GitHub/SilverSteam/$1 [NC]
+
+RewriteRule ^DarkSteam$ /SilverSteam/ [R=301,NC]
+RewriteRule ^DarkSteam/(.*)$ /SilverSteam/ [R=301,NC]
+</IfModule>
